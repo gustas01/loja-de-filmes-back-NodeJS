@@ -1,31 +1,29 @@
-import User from '../models/User'
+import axios from 'axios'
 
 let homeController = {}
 
 homeController.index = async (req, res) => {
-  res.status(200).json({tudCerto: true})
-}
-
-
-homeController.create = async (req, res) => {
-  res.send("olá do controler no create")
+  try{
+    const url = `https://api.themoviedb.org/3/trending/movie/week?api_key=${process.env.REACT_APP_API_KEY}&language=pt-Br&page=${req.params.page}`
+    const trendingMovies = await axios(url)
+    return res.send(await trendingMovies.data)
+  }catch(e){
+    console.log(e);
+  }
 }
 
 
 homeController.read = async (req, res) => {
-  res.send("olá do controle no read")
+  try{
+    if(req.params.movieNameSearch){
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR&page=1&include_adult=false&query=${req.params.movieNameSearch}&page=${req.params.pageFromSearchedMovie}`
+      const searchedMovies = await axios(url)
+      return res.send(await searchedMovies.data)
+    }
+  }catch(e){
+    console.log(e);
+  }
 }
-
-
-homeController.update = async (req, res) => {
-  res.send("olá do controle no update")
-}
-
-
-homeController.delete = async (req, res) => {
-  res.send("olá do controle no delete")
-}
-
 
 
 export default homeController

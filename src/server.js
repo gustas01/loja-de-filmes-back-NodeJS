@@ -5,9 +5,10 @@ import dotenv from 'dotenv'
 import userRoutes from './routes/userRoutes.js'
 import homeRoutes from './routes/homeRoutes.js'
 import tokenRoutes from './routes/tokenRoutes.js'
+import shoppingCartRoutes from './routes/shoppingCartRoutes.js'
 
 const whiteList = [
-  'https://localhost:3000'
+  'https://localhost:3001'
 ]
 
 const corsOption = {
@@ -26,6 +27,7 @@ app.use(express.urlencoded({extended: true}))
 
 app.use('/users', userRoutes)
 app.use('/tokens', tokenRoutes)
+app.use('/shoppingCart', shoppingCartRoutes)
 app.use('/', homeRoutes)
 
 
@@ -33,4 +35,4 @@ app.use('/', homeRoutes)
 app.use(helmet())
 app.use(cors(corsOption))
 
-app.listen(process.env.APP_PORT, () => console.log(`servidor executando na porta 3000 ${process.env.APP_URL}`))
+app.listen(process.env.APP_PORT, () => console.log(`servidor executando na porta ${process.env.APP_PORT} ${process.env.APP_URL}`))
