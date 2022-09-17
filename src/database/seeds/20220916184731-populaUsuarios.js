@@ -28,7 +28,7 @@ module.exports = {
   return await queryInterface.bulkInsert('shopping_carts', [
     {
       user_id: firstRow[0].id,
-      shopping_cart: JSON.stringify([
+      products: JSON.stringify([
         {
           id: 1,
           name: "Matrix",
@@ -49,7 +49,7 @@ module.exports = {
     },
     {
       user_id: firstRow[1].id,
-      shopping_cart: JSON.stringify([
+      products: JSON.stringify([
       {
         id: 2,
         name: 'Interestelar',

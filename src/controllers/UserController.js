@@ -1,13 +1,14 @@
 import User from '../models/User'
+import shoppingCartController from './ShoppingCartController'
 
 let userController = {}
 
 userController.index = async (req, res) => {
  try{
   const users = await User.findAll({attributes: ['id', 'name', 'email']})
-  res.json(users)
+  return res.json(users)
  }catch(e){
-  res.status(400).json({
+  return res.status(400).json({
     errors: e.errors.map(err => err.message)
   })
  }
@@ -17,10 +18,12 @@ userController.index = async (req, res) => {
 userController.create = async (req, res) => {
   try{
     const novoUser = await User.create(req.body)
-    const {name, email, password} = novoUser
-    return res.json({name, email, password})
+    const {id, name, email} = novoUser
+    shoppingCartController.create(id)
+
+    return res.json({id, name, email})
   }catch(e){
-    res.status(400).json({
+    return res.status(400).json({
       errors: e.errors.map(err => err.message)
     })
   }

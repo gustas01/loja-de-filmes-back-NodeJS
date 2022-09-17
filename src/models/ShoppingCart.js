@@ -4,8 +4,8 @@ import databaseConfig from "../config/database";
 
 const connection = new Sequelize(databaseConfig)
 
-const ShoppingCart = connection.define('ShoppingCart', {
-  shoppingCart: {
+const ShoppingCart = connection.define('shopping_carts', {
+  products: {
     type: Sequelize.JSON,
     defaultValue: '',
     allowNull: false,
@@ -14,7 +14,7 @@ const ShoppingCart = connection.define('ShoppingCart', {
 {},)
 
 ShoppingCart.belongsTo(User, {
-  foreignKey: 'userId',
+  foreignKey: 'user_id',
   onDelete: 'CASCADE',
   onUpdate: 'CASCADE',
 })

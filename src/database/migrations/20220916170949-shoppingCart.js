@@ -21,7 +21,7 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE',
       },
-      shopping_cart: {
+      products: {
         type: Sequelize.JSON,
         allowNull: false,
       },

@@ -4,11 +4,23 @@ import User from '../models/User'
 let shoppingCartController = {}
 
 shoppingCartController.index = async (req, res) => {
+  res.send("olá do controler no index Do Carrinho")
 }
 
 
-shoppingCartController.create = async (req, res) => {
-  res.send("olá do controler no create Do Carrinho")
+shoppingCartController.create = async (userId, res) => {
+  try{
+    await ShoppingCart.create({
+      user_id: userId,
+      products: [{}],
+      created_at: new Date(),
+      updated_at: new Date(),
+    })
+  }catch(e){
+    return res.status(400).json({
+      errors: e.errors.map(err => err.message)
+    })
+  }
 }
 
 
@@ -45,9 +57,9 @@ shoppingCartController.update = async (req, res) => {
         },
       }
     )
-    await actualShoppingCart.update({shoppingCart: [req.body]})
+    await actualShoppingCart.update({products: [req.body]})
 
-    return res.status(200).json(actualShoppingCart.shoppingCart)
+    return res.status(200).json(actualShoppingCart.products)
 
   }catch(e){
     return res.status(400)
@@ -71,7 +83,7 @@ shoppingCartController.delete = async (req, res) => {
         },
       }
     )
-    await actualShoppingCart.update({shoppingCart: []})
+    await actualShoppingCart.update({products: [{}]})
 
     return res.status(200).json('carrinho limpo')
 
