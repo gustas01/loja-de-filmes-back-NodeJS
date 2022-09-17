@@ -5,8 +5,6 @@ let userController = {}
 userController.index = async (req, res) => {
  try{
   const users = await User.findAll({attributes: ['id', 'name', 'email']})
-  // console.log('userId: ', req.userId);
-  // console.log('userEmail: ', req.userEmail);
   res.json(users)
  }catch(e){
   res.status(400).json({
@@ -55,7 +53,7 @@ userController.update = async (req, res) => {
     const user = await User.findByPk(req.userId)
 
     if(!user){
-      return res.status(404).json({errros: ["Usuário não encontrado"]})
+      return res.status(404).json({errors: ["Usuário não encontrado"]})
     }
 
     const userUpdated = await user.update(req.body)
