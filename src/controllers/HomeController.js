@@ -16,7 +16,7 @@ homeController.index = async (req, res) => {
 homeController.read = async (req, res) => {
   try{
     if(req.params.movieNameSearch){
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR&page=1&include_adult=false&query=${req.params.movieNameSearch}&page=${req.params.pageFromSearchedMovie}`
+      const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR&query=${req.params.movieNameSearch}&page=${req.params.pageFromSearchedMovie}`
       const searchedMovies = await axios(url)
       return res.send(await searchedMovies.data)
     }
