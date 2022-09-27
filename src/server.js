@@ -7,6 +7,7 @@ import homeRoutes from './routes/homeRoutes.js'
 import tokenRoutes from './routes/tokenRoutes.js'
 import shoppingCartRoutes from './routes/shoppingCartRoutes.js'
 import genresRoutes from './routes/genresRoutes'
+import trailerRoutes from './routes/trailerRoutes'
 
 
 const whiteList = [
@@ -33,6 +34,7 @@ app.use('/users', userRoutes)
 app.use('/tokens', tokenRoutes)
 app.use('/shoppingCart', shoppingCartRoutes)
 app.use('/genres', genresRoutes)
+app.use('/trailer', trailerRoutes)
 app.use('/', homeRoutes)
 
 
