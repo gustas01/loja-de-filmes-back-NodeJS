@@ -1,16 +1,16 @@
-import ShoppingCart from '../models/ShoppingCart'
+import Favorites from '../models/Favorites'
 import User from '../models/User'
 
-let shoppingCartController = {}
+let favoritesController = {}
 
-shoppingCartController.index = async (req, res) => {
+favoritesController.index = async (req, res) => {
   res.send("olá do controler no index Do Carrinho")
 }
 
 
-shoppingCartController.create = async (userId, res) => {
+favoritesController.create = async (userId, res) => {
   try{
-    await ShoppingCart.create({
+    await Favorites.create({
       user_id: userId,
       products: [],
       created_at: new Date(),
@@ -24,10 +24,10 @@ shoppingCartController.create = async (userId, res) => {
 }
 
 
-shoppingCartController.read = async (req, res) => {
+favoritesController.read = async (req, res) => {
   try{
-    // include = Inner Join das tabelas shoppingCart e users
-    const shoppingCart = await ShoppingCart.findOne({
+    // include = Inner Join das tabelas Favorites e users
+    const favorites = await Favorites.findOne({
       include: [{
         model: User,
         required: true,
@@ -36,7 +36,7 @@ shoppingCartController.read = async (req, res) => {
         }
       }]
     })
-    res.status(200).json(shoppingCart)
+    res.status(200).json(favorites)
   }catch(e){
     return res.status(400).json({
       errors: e.errors.map(err => err.message)
@@ -45,22 +45,22 @@ shoppingCartController.read = async (req, res) => {
 }
 
 
-shoppingCartController.update = async (req, res) => {
+favoritesController.update = async (req, res) => {
   try{
     const user = await User.findByPk(req.userId)
 
     if(!user)
       return res.status(404).json({errors: ["Usuário não encontrado"]})
 
-    const actualShoppingCart = await ShoppingCart.findOne({
+    const actualFavorites = await Favorites.findOne({
         where: {
           user_id: req.userId
         },
       }
     )
-    await actualShoppingCart.update({products: req.body})
+    await actualFavorites.update({products: req.body})
 
-    return res.status(200).json(actualShoppingCart.products)
+    return res.status(200).json(actualFavorites.products)
 
   }catch(e){
     return res.status(400)
@@ -71,20 +71,20 @@ shoppingCartController.update = async (req, res) => {
 }
 
 
-shoppingCartController.delete = async (req, res) => {
+favoritesController.delete = async (req, res) => {
   try{
     const user = await User.findByPk(req.userId)
 
     if(!user)
       return res.status(404).json({errors: ["Usuário não encontrado"]})
 
-    const actualShoppingCart = await ShoppingCart.findOne({
+    const actualFavorites = await Favorites.findOne({
         where: {
           user_id: req.userId
         },
       }
     )
-    await actualShoppingCart.update({products: [{}]})
+    await actualFavorites.update({products: [{}]})
 
     return res.status(200).json('carrinho limpo')
 
@@ -98,4 +98,4 @@ shoppingCartController.delete = async (req, res) => {
 
 
 
-export default shoppingCartController
+export default favoritesController

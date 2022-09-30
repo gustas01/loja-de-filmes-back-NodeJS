@@ -1,5 +1,6 @@
 import User from '../models/User'
 import shoppingCartController from './ShoppingCartController'
+import FavoritesController from './FavoritesController'
 
 let userController = {}
 
@@ -20,6 +21,7 @@ userController.create = async (req, res) => {
     const novoUser = await User.create(req.body)
     const {id, name, email} = novoUser
     shoppingCartController.create(id)
+    FavoritesController.create(id)
 
     return res.json({id, name, email})
   }catch(e){

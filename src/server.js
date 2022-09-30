@@ -6,6 +6,7 @@ import userRoutes from './routes/userRoutes.js'
 import homeRoutes from './routes/homeRoutes.js'
 import tokenRoutes from './routes/tokenRoutes.js'
 import shoppingCartRoutes from './routes/shoppingCartRoutes.js'
+import favoritesRoutes from './routes/favoritesRoutes.js'
 import genresRoutes from './routes/genresRoutes'
 import trailerRoutes from './routes/trailerRoutes'
 
@@ -34,6 +35,7 @@ app.use(cors(corsOption))
 app.use('/users', userRoutes)
 app.use('/tokens', tokenRoutes)
 app.use('/shoppingCart', shoppingCartRoutes)
+app.use('/favorites', favoritesRoutes)
 app.use('/genres', genresRoutes)
 app.use('/trailer', trailerRoutes)
 app.use('/', homeRoutes)
