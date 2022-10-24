@@ -1,0 +1,193 @@
+---
+openapi: 3.0.0
+info:
+  title: Loja de filmes
+  description: Loja de filmes
+  contact:
+    email: gustavohdlima@hotmail.com
+  version: "1"
+servers:
+- url: https://virtserver.swaggerhub.com/GUSTAVOHDLIMA/BackLojaDeFilmes/1.0.0
+  description: Loja de filmes
+tags:
+- name: User
+  description: Usuários criados na aplicação
+- name: ShoppingCart
+  description: Carrinho de compras atrelado ao usuário logado
+- name: Favorites
+  description: Lista de filmes favoritos atrelado ao usuário logado
+paths:
+  /users:
+    get:
+      tags:
+      - User
+      summary: Ler usuário pelo id
+      description: |
+        Buscar usuário pelo id
+      responses:
+        "200":
+          description: Amostra de resposta
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "400":
+          description: Usuário não encontrado
+    put:
+      tags:
+      - User
+      summary: Atualizar dados do usuário logado
+      description: Atualizar usuário
+      operationId: updateInventory
+      requestBody:
+        description: Usuário a ser atualizado
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Usuário atualizado com sucesso!
+        "400":
+          description: Não autorizado
+        "409":
+          description: Email já existe
+    post:
+      tags:
+      - User
+      summary: Criar usuário
+      description: Cria um usuário para poder usar o sistema totalmente
+      operationId: addInventory
+      requestBody:
+        description: Usuário a ser adicionado
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: Usuário criado com sucesso!
+        "400":
+          description: Não autorizado
+        "409":
+          description: Email já existe
+    delete:
+      tags:
+      - User
+      summary: Deletar um usuário
+      description: Deletar usuário logado
+      operationId: deleteInventory
+      responses:
+        "200":
+          description: Usuário atualizado com sucesso!
+        "400":
+          description: Não autorizado
+        "409":
+          description: Email já existe
+  /shoppingCart:
+    get:
+      tags:
+      - ShoppingCart
+      summary: Ler carrinho de compras
+      description: |
+        Ler carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingCart'
+    put:
+      tags:
+      - ShoppingCart
+      summary: Atualizar carrinho de compras
+      description: |
+        Atualiar carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+    delete:
+      tags:
+      - ShoppingCart
+      summary: Deletar carrinho de compras
+      description: |
+        Deletar carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+  /favorites:
+    get:
+      tags:
+      - Favorites
+      summary: Ler carrinho de compras
+      description: |
+        Ler carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ShoppingCart'
+    put:
+      tags:
+      - Favorites
+      summary: Atualizar carrinho de compras
+      description: |
+        Atualiar carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+    delete:
+      tags:
+      - Favorites
+      summary: Deletar carrinho de compras
+      description: |
+        Deletar carrinho de compras assiciado ao usuário logado
+      responses:
+        "200":
+          description: ""
+components:
+  schemas:
+    User:
+      required:
+      - email
+      - name
+      - password
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: Gustavo
+        password:
+          type: string
+          example: "123456"
+    ShoppingCart:
+      required:
+      - products
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        user_id:
+          type: number
+          example: 10
+        products:
+          type: object
+          example:
+          - id: 862965
+            imageURL: /iZvzMpREGiqDQ5eYbx8z70qPgst.jpg
+            name: Emily the Criminal
+            quant: 1
+            price: 79.9
