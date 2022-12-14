@@ -3,6 +3,6 @@ import HomeAPI from '../controllers/HomeAPI.js'
 
 const router = new Router()
 
-router.get('/:page', HomeAPI.index)
+router.get('/:movieId', HomeAPI.relatedMovies)
 
 export default router

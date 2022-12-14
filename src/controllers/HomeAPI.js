@@ -13,32 +13,35 @@ HomeAPI.index = async (req, res) => {
 }
 
 
-HomeAPI.read = async (req, res) => {
-  try{
-    if(req.params.movieNameSearch){
-      const url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR&query=${req.params.movieNameSearch}&page=${req.params.pageFromSearchedMovie}`
-      const searchedMovies = await axios(url)
-      return res.send(await searchedMovies.data)
-    }
-  }catch(e){
-    console.log(e);
-  }
-}
-
-
 HomeAPI.trailer = async (req, res) => {
   try{
-      const url = `https://api.themoviedb.org/3/movie/${req.params.movieId}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR`
-      const URLTrailer = await axios(url)
-      const movieVideos = await URLTrailer.data
-      const trailers = movieVideos.results?.filter(el => el.type === "Trailer")
-      const key = movieVideos.results?.filter(el => el.type === "Trailer")[trailers.length - 1].key
+      let url = `https://api.themoviedb.org/3/movie/${req.params.movieId}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR`
+
+      let URLTrailer = await (await axios(url)).data
+      let trailers = URLTrailer.results?.filter(el => el.type === "Trailer")
+
+      //esse if é executado caso o filme não tenha trailer em português, aí procuro em inglês mesmo
+      if(!trailers.length){
+        url = `https://api.themoviedb.org/3/movie/${req.params.movieId}/videos?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`
+        URLTrailer = await (await axios(url)).data
+        trailers = URLTrailer.results?.filter(el => el.type === "Trailer")
+      }
+
+      const key = URLTrailer.results?.filter(el => el.type === "Trailer")[trailers.length - 1].key
       const trailerLink = `https://www.youtube.com/watch?v=${key}`
       return res.json(trailerLink)
   }catch(e){
     console.log(e);
   }
 }
+
+
+HomeAPI.relatedMovies = async (req, res) => {
+  const url = `https://api.themoviedb.org/3/movie/${req.params.movieId}/similar?api_key=${process.env.REACT_APP_API_KEY}&language=pt-BR&page=1`
+  const response = await (await axios(url)).data
+  return res.json(response)
+}
+
 
 
 export default HomeAPI

@@ -9,10 +9,13 @@ import shoppingCartRoutes from './routes/shoppingCartRoutes.js'
 import favoritesRoutes from './routes/favoritesRoutes.js'
 import genresRoutes from './routes/genresRoutes'
 import trailerRoutes from './routes/trailerRoutes'
+import relatedMoviesRoutes from './routes/relatedMoviesRoutes'
+import searchMovieRoutes from './routes/searchMovieRoutes'
 
 
 const whiteList = [
-  'http://localhost:3000'
+  'http://localhost:3000',
+  'http://localhost:4200'
 ]
 
 const corsOption = {
@@ -38,6 +41,8 @@ app.use('/shoppingCart', shoppingCartRoutes)
 app.use('/favorites', favoritesRoutes)
 app.use('/genres', genresRoutes)
 app.use('/trailer', trailerRoutes)
+app.use('/related', relatedMoviesRoutes)
+app.use('/search', searchMovieRoutes)
 app.use('/', homeRoutes)
 
 
