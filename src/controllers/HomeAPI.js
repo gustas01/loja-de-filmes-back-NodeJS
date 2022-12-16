@@ -27,7 +27,7 @@ HomeAPI.trailer = async (req, res) => {
         trailers = URLTrailer.results?.filter(el => el.type === "Trailer")
       }
 
-      const key = URLTrailer.results?.filter(el => el.type === "Trailer")[trailers.length - 1].key
+      const key = URLTrailer.results?.filter(el => el.type === "Trailer")[trailers.length - 1]?.key
       const trailerLink = `https://www.youtube.com/watch?v=${key}`
       return res.json(trailerLink)
   }catch(e){
