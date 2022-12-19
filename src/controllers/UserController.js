@@ -18,12 +18,17 @@ userController.index = async (req, res) => {
 
 userController.create = async (req, res) => {
   try{
+    const { password } = req.body
+
+    if (!((/[A-Z]/).test(password) && ((/[a-z]/).test(password))))
+      return res.status(400).json({errors: ["A senha deve ter pelo menos 1 letra maiúscula e 1 minúscula"]})
+
     const novoUser = await User.create(req.body)
     const {id, name, email} = novoUser
     shoppingCartController.create(id)
     FavoritesController.create(id)
 
-    return res.json({id, name, email})
+    return res.json({msg: "Usuário criado com sucesso!"})
   }catch(e){
     return res.status(400).json({
       errors: e.errors.map(err => err.message)
