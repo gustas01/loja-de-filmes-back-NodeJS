@@ -35,7 +35,7 @@ tokenController.create = async (req, res) => {
   const token = jwt.sign({id, name, email}, process.env.TOKEN_SECRET, {
     expiresIn: process.env.TOKEN_EXPIRATION
   })
-  res.send({token})
+  res.json({token})
 }
 
 
