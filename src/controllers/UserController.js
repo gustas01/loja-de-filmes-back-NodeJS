@@ -60,6 +60,12 @@ userController.read = async (req, res) => {
 
 userController.update = async (req, res) => {
   try{
+    const { password } = req.body
+
+    if (!((/[A-Z]/).test(password) && ((/[a-z]/).test(password))))
+      return res.status(400).json({errors: ["A senha deve ter pelo menos 1 letra maiúscula e 1 minúscula"]})
+
+
     const user = await User.findByPk(req.userId)
 
     if(!user){
@@ -67,8 +73,8 @@ userController.update = async (req, res) => {
     }
 
     const userUpdated = await user.update(req.body)
-    const {id, name, email} = userUpdated
-    return res.status(200).json({id, name, email})
+    // const {id, name, email} = userUpdated
+    return res.status(200).json({msg: "Usuário atualizado com sucesso!"})
 
   }catch(e){
     return res.status(400).json({
